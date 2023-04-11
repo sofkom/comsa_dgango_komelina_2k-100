@@ -1,23 +1,20 @@
-from models import Review
-list = Review.objects.all()
-
-
-
-from django.shortcuts import render
-from views import M_form
+from django.shortcuts import render, redirect
+from web.forms import MForm
+from web.models import Category, Review
 
 def main(request):
-    form = M_form()
-
+    list = Review.objects.all()
+    form = MForm()
     if request.method == 'POST':
-        form = M_form('POST')
-        return request('POST')
-    if form.is_valid:
-        form.safe()
+        form = MForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('main')
+    return render(request, 'main.html', {
+        'form': form,
+        'list': list
+    })
 
-
-
-    return render(request, 'main.html', {'form': form}, {'list': list})
 
 
 

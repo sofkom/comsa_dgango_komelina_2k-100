@@ -1,11 +1,11 @@
 from web.models import Review, Category
-from django import forms
+    from django import forms
 
-class M_form():
-    forms.formset_factory()
+    class MForm(forms.ModelForm):
+        class Meta:
+            model = Category
+            fields = ['name', 'category', 'text']
 
 
-class Meta():
-    model = Review
-    field = ['name', 'category', 'text']
+    return render(request, 'main.html', {'form': form}, {'list': list})
 
